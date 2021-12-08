@@ -1,4 +1,4 @@
-const { Client, Intents, MessageEmbed } = require("discord.js");
+const { Client, Intents, MessageEmbed, DiscordAPIError, Emoji } = require("discord.js");
 const { token, channelId, blockNativeAPIKey, guildId, roleId } = require("./config.json");
 const superagent = require("superagent");
 
@@ -56,14 +56,19 @@ client.once("ready", async () => {
             .query("confidenceLevels=99")
             .query("confidenceLevels=95")
             .query("confidenceLevels=90")
+            .query("confidenceLevels=70")
             .set("Authorization", blockNativeAPIKey);
 
         let gas = res.body.blockPrices[0].baseFeePerGas;
+        let gasFast = res.body.blockPrices[0].estimatedPrices
+        
+        client.user.setActivity(`⚡ ${gasFast[0].price}🚶${gasFast[2].price}🐢${gasFast[3].price}`)
         if (gasList.length < 10) {
             gasList.push(gas);
         } else {
             gasList.shift();
             gasList.push(gas);
+
 
             let gasAverage = average(gasList);
             if (gasAverage < 60) {
