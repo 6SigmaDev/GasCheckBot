@@ -62,6 +62,7 @@ client.once("ready", async () => {
     const guild = client.guilds.cache.get(guildId);
     const role = guild.roles.cache.get(roleId);
     const average = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+    let timeBefore = 0;
     let gasList = [];
 
     channel.send("Ready");
@@ -81,20 +82,25 @@ client.once("ready", async () => {
         client.user.setActivity(
             `⚡ ${gasFast[0].price}🚶${gasFast[2].price} 🐢${gasFast[3].price}`
         );
-        if (gasList.length < 10) {
-            gasList.push(gas);
-        } else {
-            gasList.shift();
-            gasList.push(gas);
+        console.log(Date.now() - timeBefore);
+        if (Date.now() - timeBefore >= 20 * 60 * 1000) {
+            console.log("back to workd")
+            if (gasList.length < 2) {
+                gasList.push(gas);
+            } else {
+                gasList.shift();
+                gasList.push(gas);
 
-            let gasAverage = average(gasList);
-            if (gasAverage <= 60) {
-                sendMessage(client, res.body, role);
-                gasList = [];
+                let gasAverage = average(gasList);
+                if (gasAverage <= 100) {
+                    sendMessage(client, res.body, role);
+                    timeBefore = Date.now();
+                    gasList = [];
+                }
             }
         }
         console.log(gas);
-    }, 6000);
+    }, 6100);
 });
 
 // Login to Discord with your client's token
