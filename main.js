@@ -85,14 +85,14 @@ client.once("ready", async () => {
         console.log(Date.now() - timeBefore);
         if (Date.now() - timeBefore >= 20 * 60 * 1000) {
             console.log("back to workd")
-            if (gasList.length < 2) {
+            if (gasList.length < 10) {
                 gasList.push(gas);
             } else {
                 gasList.shift();
                 gasList.push(gas);
 
                 let gasAverage = average(gasList);
-                if (gasAverage <= 100) {
+                if (gasAverage <= 60 && gas <= 60) {
                     sendMessage(client, res.body, role);
                     timeBefore = Date.now();
                     gasList = [];
