@@ -46,7 +46,7 @@ async function sendMessage(client, infos, role) {
                 inline: true,
             }
         )
-        .setFooter("Six Sigma NFT");
+        .setFooter("6Sigma");
 
     channel.send({ embeds: [message] });
     channel.send(`${role}`);
