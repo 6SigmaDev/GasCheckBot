@@ -12,6 +12,8 @@ async function sendMessage(client, infos, role) {
     const channel = client.channels.cache.get(channelId);
     const blockPrices = infos.blockPrices[0].estimatedPrices;
 
+    let footerLogos = 'https://media.discordapp.net/attachments/922888317438148728/927853587151847444/nftzy.png?width=678&height=657'
+
     let message = new MessageEmbed()
         .setColor("#" + (((1 << 24) * Math.random()) | 0).toString(16))
         .setTitle(`Gas has been under 80 for 1 minutes !`)
@@ -46,7 +48,7 @@ async function sendMessage(client, infos, role) {
                 inline: true,
             }
         )
-        .setFooter("6Sigma");
+        .setFooter("6Sigma", footerLogos);
 
     channel.send({ embeds: [message] });
     channel.send(`${role}`);
